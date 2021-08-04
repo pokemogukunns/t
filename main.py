@@ -57,8 +57,33 @@ def build_cli():
     return parser.parse_args()
 
 
+def size_in_mb(size_in_bytes):
+    """ Convert file size bytes to MB or kB."""
+    if size_in_bytes < 10**6:
+        return size_in_bytes // 1000
+    else:
+        return size_in_bytes // 10**6
 
 
+def mp4_to_mp3(mp4_filename, path):
+    """ Convert mp4 audios to mp3."""
+    full_mp4_path = os.path.join(path, mp4_filename)
+
+    if os.path.exists(full_mp4_path):
+        # getting audio content from the mp4 audio
+        audio_clip = AudioFileClip(full_mp4_path)
+
+        # save the audio content in mp3 format
+        mp3_filename = mp4_filename[:-3] + 'mp3'
+        full_mp3_path = os.path.join(path, mp3_filename)
+        audio_clip.write_audiofile(full_mp3_path)
+
+        # after converting to mp3, get rid of the mp4 file
+        os.remove(full_mp4_path)
+        audio_clip.close()
+    else:
+        print(f"The path '{full_mp4_path}' doesn't exist.")
+        sys.exit()
 
 cli = build_cli()
 if cli.clipboard:

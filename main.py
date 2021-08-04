@@ -67,7 +67,7 @@ def build_cli():
 
 
 def on_complete(stream, filepath):
-    """ A function to be triggered when the file is fully downloaded."""
+    """ A function to be triggered whenever a file is fully downloaded."""
     global cli, video_path, audio_path
 
     if cli.audio_only:
@@ -85,7 +85,7 @@ def on_complete(stream, filepath):
 
 
 def size_in_mb(size_in_bytes):
-    """ Convert file size bytes to MB or kB."""
+    """ Convert file size in bytes to MB or kB."""
     if size_in_bytes < 10**6:
         return size_in_bytes // 1000
     else:
@@ -98,6 +98,7 @@ def merge(video_path, audio_path):
     audio_clip = AudioFileClip(audio_path)
     final_video = video_clip.set_audio(audio_clip)
     final_video.write_videofile(video_path[:-10] + '.mp4')
+
     os.remove(video_path)
     os.remove(audio_path)
     video_clip.close()
@@ -123,13 +124,13 @@ def download_audio(audio_stream):
     print(f'Filename:\t{audio_stream.title}')
     print(f'Location:\t{path}')
     print(f'Size:\t\t{file_size} MB\n')
-    filename = audio_stream.title + '_audio.mp4'
 
+    filename = audio_stream.title + '_audio.mp4'
     audio_stream.download(path, filename)
 
 
 def download_video(video_stream):
-    """ Download audio from YouTube."""
+    """ Download video from YouTube."""
     global file_size
     file_size = size_in_mb(video_stream.filesize)
     home_dir = os.environ['HOME']
@@ -138,8 +139,8 @@ def download_video(video_stream):
     print(f'Filename:\t{video_stream.title}')
     print(f'Location:\t{path}')
     print(f'Size:\t\t{file_size} MB\n')
-    filename = video_stream.title + '_video.mp4'
 
+    filename = video_stream.title + '_video.mp4'
     video_stream.download(path, filename)
 
 
@@ -200,7 +201,6 @@ def main():
                 video_stream = get_video_stream(yt, default)
                 download_video(video_stream)
                 if adaptive == True:
-                    print('ADAPTIVE IS TRUE')
                     audio_stream = yt.streams.get_audio_only()
                     download_audio(audio_stream)
 

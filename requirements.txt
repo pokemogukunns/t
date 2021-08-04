@@ -1,0 +1,5 @@
+Package        Version
+-------------- -------  
+moviepy        1.0.3  
+pyperclip      1.8.2  
+pytube         10.9.3  

@@ -13,6 +13,8 @@ import os
 import sys
 import argparse
 import pyperclip
+from pytube import YouTube
+from pytube.cli import on_progress
 from moviepy.editor import VideoFileClip
 from moviepy.editor import AudioFileClip
 
@@ -56,6 +58,14 @@ def build_cli():
                         )
     return parser.parse_args()
 
+def on_complete(stream, filepath):
+    """ A function to be triggered when the file is fully downloaded."""
+    global cli
+    if cli.audio_only:
+        print('Converting audio to mp3. This might take some time.\n')
+        mp4_to_mp3(filepath)
+        print("\nDownload has completed.\n")
+
 
 def size_in_mb(size_in_bytes):
     """ Convert file size bytes to MB or kB."""
@@ -65,25 +75,31 @@ def size_in_mb(size_in_bytes):
         return size_in_bytes // 10**6
 
 
-def mp4_to_mp3(mp4_filename, path):
+def mp4_to_mp3(filepath):
     """ Convert mp4 audios to mp3."""
-    full_mp4_path = os.path.join(path, mp4_filename)
+    audio_clip = AudioFileClip(filepath)
+    mp3_filename = filepath[:-3] + 'mp3'
+    audio_clip.write_audiofile(mp3_filename)
+    os.remove(filepath)
+    audio_clip.close()
 
-    if os.path.exists(full_mp4_path):
-        # getting audio content from the mp4 audio
-        audio_clip = AudioFileClip(full_mp4_path)
 
-        # save the audio content in mp3 format
-        mp3_filename = mp4_filename[:-3] + 'mp3'
-        full_mp3_path = os.path.join(path, mp3_filename)
-        audio_clip.write_audiofile(full_mp3_path)
+def download_audio(audio):
+    """ Download audio from YouTube."""
+    global file_size
+    file_size = size_in_mb(audio.filesize)
+    
+    home_dir = os.environ['HOME']
+    path = f'{home_dir}/Downloads/Music'
 
-        # after converting to mp3, get rid of the mp4 file
-        os.remove(full_mp4_path)
-        audio_clip.close()
-    else:
-        print(f"The path '{full_mp4_path}' doesn't exist.")
-        sys.exit()
+    print('-'*60)
+    print(f'Filename:\t{audio.title}')
+    print(f'Location:\t{path}')
+    print(f'Size:\t\t{file_size} MB\n')
+
+    audio.download(path, audio.title + '.mp4') 
+
+
 
 cli = build_cli()
 if cli.clipboard:

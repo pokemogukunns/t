@@ -5,7 +5,7 @@ It is a command-line based video and audio downloader from YouTube in various
 video resolutions (360p, 480p, 720p) and audio in mp3 format. It has an easy to
 use command-line interface so that we can use it right from the Terminal.
 
-Author: Alemnew M.
+Author: @balewgize
 Date: Jul 2013 E.C
 """
 
@@ -31,7 +31,7 @@ audio_path = ''
 def build_cli():
     """ Build Command-line interface for the downloader."""
     parser = argparse.ArgumentParser(prog='main.py',
-                                    usage='ydm {-u URL | -c} ',
+                                    usage='python3 main.py {-u URL | -c} ',
                                     description='YouTube video and Audio downloader.',
                                     epilog='Enjoy the program :)'
                                     )
@@ -44,7 +44,7 @@ def build_cli():
     group_one.add_argument('-c',
                         '--clipboard',
                         action='store_true',
-                        help='copy URL from clipboard'
+                        help='copy URL from the clipboard'
                         )
     group_two = parser.add_mutually_exclusive_group()
     group_two.add_argument('-a',
@@ -106,7 +106,7 @@ def merge(video_path, audio_path):
 
 
 def mp4_to_mp3(filepath):
-    """ Convert mp4 audios to mp3."""
+    """ Convert mp4 audio to mp3."""
     audio_clip = AudioFileClip(filepath)
     mp3_filename = filepath[:-3] + 'mp3'
     audio_clip.write_audiofile(mp3_filename)

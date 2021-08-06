@@ -206,13 +206,13 @@ def main():
 
     except RegexMatchError:
         print('\nError: the URL you provide is invalid.\n')
-        print('Please enter a valid URL from YouTube.\n')
+        print('Please provide a valid URL from YouTube.\n')
     except VideoUnavailable:
         print('\nError: this video is not availble.\n')
         print('Try another video.\n')
     except Exception as error_msg:
         print('\nError: something went wrong while trying to download.\n')
-        print('Please try again.\n', error_msg)
+        print(error_msg)
 
 
 if __name__ == '__main__':

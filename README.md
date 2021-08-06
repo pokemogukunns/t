@@ -15,3 +15,6 @@ $ python3 main.py -c
 
 $ python3 main.py -a -c
 (get URL from the clipboard and download the audio only)
+
+$ python3 main.py -c -r 480p
+(get URL from clipboard and download the video with 480p resolution.)

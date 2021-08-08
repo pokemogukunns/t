@@ -73,7 +73,6 @@ def on_complete(stream, filepath):
     if cli.audio_only:
         print('Converting audio to mp3. This might take some time.\n')
         mp4_to_mp3(filepath)
-        print("\nDownload has completed.\n")
 
     if adaptive:
         if '_video.mp4' in filepath:
@@ -82,7 +81,7 @@ def on_complete(stream, filepath):
             audio_path = filepath
         if os.path.exists(video_path) and os.path.exists(audio_path):
             merge(video_path, audio_path)
-    print()
+    print("\nDownload has completed.\n")
 
 
 def size_in_mb(size_in_bytes):
@@ -99,7 +98,7 @@ def merge(video_path, audio_path):
     audio_clip = AudioFileClip(audio_path)
     final_video = video_clip.set_audio(audio_clip)
     final_video.write_videofile(video_path[:-10] + '.mp4')
-    print("\nDownload has completed.\n")
+
     os.remove(video_path)
     os.remove(audio_path)
     video_clip.close()

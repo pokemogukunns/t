@@ -81,7 +81,7 @@ def on_complete(stream, filepath):
             audio_path = filepath
         if os.path.exists(video_path) and os.path.exists(audio_path):
             merge(video_path, audio_path)
-    print("\nDownload has completed.\n")
+    print("\n\nDownload has completed.\n")
 
 
 def size_in_mb(size_in_bytes):

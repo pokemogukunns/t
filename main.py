@@ -9,8 +9,7 @@ Author: @balewgize
 Date: Jul 2013 E.C
 """
 
-import os
-import sys
+import os, sys
 import argparse
 import pyperclip
 from pytube import YouTube
@@ -21,11 +20,12 @@ from moviepy.editor import VideoFileClip
 from moviepy.editor import AudioFileClip
 
 
-cli = ''
+cli = {}
 file_size = 0
 adaptive = False
 video_path = ''
 audio_path = ''
+num_retry = 3
 
 
 def build_cli():
@@ -141,6 +141,13 @@ def download_video(video_stream):
     print(f'Size:\t\t{file_size} MB\n')
 
     filename = video_stream.title + '_video.mp4'
+    filename = filename.replace('/', ' ')
+    filename = filename.replace('\\', ' ')
+
+    if os.path.exists(os.path.join(path, filename)):
+        print("The file has been already downloaded.")
+        sys.exit()
+    
     video_stream.download(path, filename)
 
 
@@ -160,8 +167,7 @@ def get_video_stream(yt, resolution):
         video_stream = adaptive_streams.get_by_itag(video_itag)
         adaptive = True
         return video_stream
-
-
+        
 
 def main():
     global cli, adaptive
@@ -211,8 +217,8 @@ def main():
         print('\nError: this video is not availble.\n')
         print('Try another video.\n')
     except Exception as error_msg:
-        print('\nError: something went wrong while trying to download.\n')
         print(error_msg)
+        sys.exit()
 
 
 if __name__ == '__main__':

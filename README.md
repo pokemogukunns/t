@@ -1,50 +1,52 @@
-# YouTube Downloader
-Video and Audio downloader from YouTube
+# YouTubeダウンローダー
+YouTubeからのビデオとオーディオのダウンローダー
 
-- It is a video and audio downloader from YouTube with the ability to download videos in different resolutions (360p, 480p, 720p), an audio in mp3 format.
+- これは、さまざまな解像度（360p、480p、720p）のビデオ、mp3形式のオーディオをダウンロードできるYouTubeのビデオおよびオーディオダウンローダーです。
 
-- The program has a nice and simple to use command-line interface, so that you can download videos and audios right from the Terminal.
+- このプログラムには、ターミナルから直接ビデオやオーディオをダウンロードできるように、使いやすいコマンドラインインターフェイスがあります。
 
-## Installation:
-- Clone this repository to a location you want
-- Open a Terminal and navigate to "youtube-downloader" directory
-- create a virtual environment with system site packages enabled
-- Install all required packages from requirements.txt to the virtual environment you created
+## インストール:
+- このリポジトリを好きな場所に複製する
+- ターミナルを開き、「youtube-downloader」ディレクトリに移動します。
+- システムサイトパッケージを有効にして仮想環境を作成する
+- 必要なすべてのパッケージをrequirements.txtから作成した仮想環境にインストールします。
 ```
 pip install -r requirements.txt
 ```
 
 
-- BONUS: You can create an alias to run this script and give it a fancy name like "ydm" (YouTube Download Manager) by modifying your configuration file. <a href="https://askubuntu.com/questions/17536/how-do-i-create-a-permanent-bash-alias"> Read more </a>
+- ボーナス: このスクリプトを実行するエイリアスを作成し、設定ファイルを変更することで「ydm」（YouTubeダウンロードマネージャー）のような派手な名前を付けることができます。 <a href="https://askubuntu.com/questions/17536/how-do-i-create-a-permanent-bash-alias"> もっと読む </a>
 
-- To create an alias for the script, add the following line to the end of the configuration file (don't forget to add a command to activate the virtual environment for the script before running the actual script)
+- スクリプトのエイリアスを作成するには、設定ファイルの最後に次の行を追加します（実際のスクリプトを実行する前に、スクリプトの仮想環境をアクティブにするコマンドを追加することを忘れないでください）
 ```
 alias ydm="source /path/to/youtube-downloader/venv-name/bin/activate; python3 /path/to/youtube-downloader/main.py"
 ```
-After creating an alias for the script, you can use the downloader as follows. 
+スクリプトのエイリアスを作成した後、次のようにダウンローダーを使用できます。
 ```
 ydm -u URL
 ```
 
 
-## Usage:
-Download the video with highest resolution, default 720p
+## 使う:
+最高解像度のビデオをダウンロード、デフォルトは720p
 ```
 $ python3 main.py -u URL
 ```
-Download the audio only
+オーディオのみをダウンロードする
 ```
 $ python3 main.py -a -u URL
 ```
-get URL from the clipboard and download the video
+クリップボードからURLを取得し、ビデオをダウンロードする
 ```
 $ python3 main.py -c
 ```
-get URL from the clipboard and download the audio only
+クリップボードからURLを取得し、オーディオのみをダウンロードします。
 ```
 $ python3 main.py -a -c
 ```
-get URL from clipboard and download the video with 480p resolution
+クリップボードからURLを取得し、480p解像度のビデオをダウンロードします。
 ```
 $ python3 main.py -c -r 480p
 ```
+
+ありがとうございました。
